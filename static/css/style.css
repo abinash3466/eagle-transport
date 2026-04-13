@@ -1,0 +1,1549 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #0f4a88;
+    --primary-dark: #0b315d;
+    --secondary: #ff8a1d;
+    --secondary-dark: #f17000;
+    --bg: #f5f8fc;
+    --bg-soft: #edf5ff;
+    --white: #ffffff;
+    --text: #16314f;
+    --text-soft: #5f7893;
+    --border: #d8e5f3;
+    --shadow: 0 10px 28px rgba(14, 50, 92, 0.08);
+    --shadow-strong: 0 18px 40px rgba(8, 34, 65, 0.16);
+    --radius: 20px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* -----------------------------
+   GLOBAL
+----------------------------- */
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.section {
+    padding: 70px 0;
+}
+
+.compact-top {
+    padding-top: 40px;
+}
+
+.narrow {
+    max-width: 520px;
+}
+
+.left {
+    text-align: left !important;
+}
+
+.muted {
+    color: var(--text-soft);
+    margin-bottom: 16px;
+}
+
+.section-head,
+.section-title {
+    text-align: center;
+    margin-bottom: 34px;
+}
+
+.section-head h1,
+.section-title h2 {
+    font-size: 38px;
+    color: #133b69;
+    margin-bottom: 10px;
+}
+
+.section-head p,
+.section-title p {
+    font-size: 17px;
+    color: #617a96;
+}
+
+/* -----------------------------
+   FLASH MESSAGES
+----------------------------- */
+.flash-stack {
+    margin-top: 18px;
+    display: grid;
+    gap: 12px;
+}
+
+.flash {
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+}
+
+.flash.success {
+    background: #eaf8ef;
+    color: #12753b;
+    border: 1px solid #bfe7cb;
+}
+
+.flash.error {
+    background: #fff0ef;
+    color: #b42318;
+    border: 1px solid #f3c7c3;
+}
+
+/* -----------------------------
+   HEADER FROM base.html
+----------------------------- */
+.site-header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(216, 229, 243, 0.7);
+    position: sticky;
+    top: 0;
+    z-index: 1200;
+    box-shadow: 0 8px 24px rgba(16, 48, 89, 0.06);
+}
+
+.nav-wrap {
+    min-height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.brand {
+    font-size: 30px;
+    font-weight: 800;
+    color: #133b69;
+    letter-spacing: 0.3px;
+}
+
+.brand span {
+    color: var(--secondary);
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.nav a {
+    color: #143f72;
+    font-weight: 700;
+    padding: 10px 14px;
+    border-radius: 10px;
+    transition: 0.25s ease;
+}
+
+.nav a:hover {
+    background: #eef5ff;
+    color: var(--secondary);
+}
+
+/* -----------------------------
+   HOME NAVBAR STANDALONE
+----------------------------- */
+.navbar {
+    width: 100%;
+    background: #ffffff;
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 8px 30px rgba(16, 48, 89, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.brand-text h2 {
+    margin: 0 !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+}
+
+.brand-text p {
+    margin: 2px 0 0 0 !important;
+    font-size: 14px !important;
+    color: #5b6f86 !important;
+}
+
+.nav-links {
+    display: flex;
+    gap: 22px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #143f72;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--secondary);
+}
+
+/* -----------------------------
+   BUTTONS
+----------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    transition: 0.25s ease;
+}
+
+.btn-primary,
+.primary-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover,
+.primary-btn:hover {
+    background: var(--primary-dark);
+}
+
+.secondary-btn {
+    background: white;
+    color: #123c6c;
+    border: 2px solid #123c6c;
+}
+
+.secondary-btn:hover {
+    background: #123c6c;
+    color: white;
+}
+
+.btn-small {
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 10px;
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-small:hover {
+    background: var(--secondary-dark);
+}
+
+.full {
+    width: 100%;
+}
+
+/* -----------------------------
+   HERO HOME
+----------------------------- */
+.hero {
+    min-height: 95vh;
+    background: url("../images/home-bg.jpg") center/cover no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 60px 50px;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.65),
+        rgba(255, 255, 255, 0.30)
+    );
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.hero-left {
+    max-width: 700px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: #e9f1fb;
+    color: #123e70;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.hero-left h1 {
+    font-size: 52px;
+    color: #0f3259;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    text-shadow: 0 2px 10px rgba(255,255,255,0.4);
+}
+
+.hero-left p {
+    font-size: 18px;
+    color: #355678;
+    margin-bottom: 28px;
+    max-width: 620px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* -----------------------------
+   PANELS / CARDS / FORM
+----------------------------- */
+.panel,
+.booking-card,
+.info-card,
+.stat-card,
+.why-card,
+.truck-card,
+.driver-summary,
+.contact-box {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.panel {
+    padding: 24px;
+    border: 1px solid rgba(216, 229, 243, 0.75);
+}
+
+.panel h1,
+.panel h2,
+.info-card h3 {
+    color: #143b69;
+    margin-bottom: 14px;
+}
+
+.panel-head {
+    margin-bottom: 18px;
+}
+
+.booking-card {
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(11, 47, 90, 0.16);
+}
+
+.booking-top {
+    background: linear-gradient(90deg, #ff8d24, #ff6f00);
+    color: white;
+    font-size: 22px;
+    font-weight: 800;
+    padding: 18px 24px;
+    text-align: center;
+}
+
+#bookingForm {
+    padding: 26px;
+}
+
+.stacked-form label,
+.form-group label,
+.panel label {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    color: #14385f;
+    margin-bottom: 8px;
+    margin-top: 12px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group input,
+.form-group select,
+.panel input,
+.panel select,
+.panel textarea {
+    width: 100%;
+    padding: 14px 14px;
+    font-size: 16px;
+    border: 1px solid #d5e0ee;
+    border-radius: 12px;
+    background: #f8fbff;
+    outline: none;
+    transition: 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.panel input:focus,
+.panel select:focus,
+.panel textarea:focus {
+    border-color: var(--primary);
+    background: #fff;
+}
+
+.estimate-box {
+    background: #edf5ff;
+    border: 1px solid #d8e9ff;
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin: 18px 0;
+    color: #143a65;
+    font-size: 17px;
+}
+
+.booking-btn {
+    width: 100%;
+    background: #103d72;
+    color: white;
+    font-size: 18px;
+}
+
+.booking-btn:hover {
+    background: #0b315d;
+}
+
+/* -----------------------------
+   HOME STATS
+----------------------------- */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 40px 50px;
+    background: #ffffff;
+}
+
+.stat-box {
+    background: linear-gradient(180deg, #ffffff, #f3f8ff);
+    border-radius: 18px;
+    padding: 28px 18px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(19, 55, 101, 0.07);
+}
+
+.stat-box h3 {
+    font-size: 34px;
+    color: #0d4a87;
+    margin-bottom: 8px;
+}
+
+.stat-box p {
+    color: #56708c;
+    font-weight: 600;
+}
+
+/* -----------------------------
+   COMMON SECTIONS
+----------------------------- */
+.truck-types-section,
+.why-us-section,
+.logos-section,
+.contact-section {
+    padding: 70px 50px;
+}
+
+.truck-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.truck-card {
+    padding: 28px 20px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.truck-card:hover {
+    transform: translateY(-8px);
+}
+
+.truck-icon {
+    font-size: 42px;
+    margin-bottom: 14px;
+}
+
+.truck-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #153d6d;
+}
+
+.truck-card p {
+    color: #5c7590;
+    margin-bottom: 16px;
+}
+
+.small-btn {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.small-btn:hover {
+    background: var(--secondary-dark);
+}
+
+.why-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+}
+
+.why-card {
+    padding: 26px 20px;
+}
+
+.why-card h3 {
+    margin-bottom: 10px;
+    color: #133c69;
+}
+
+.why-card p {
+    color: #607891;
+}
+
+.logos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+.logo-pill {
+    background: white;
+    border: 1px solid #d8e5f3;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-weight: 700;
+    color: #143b69;
+    box-shadow: 0 6px 18px rgba(16, 47, 87, 0.06);
+}
+
+/* -----------------------------
+   CONTACT / FOOTER
+----------------------------- */
+.contact-box {
+    background: linear-gradient(135deg, #0f4a88, #0b2f58);
+    color: white;
+    text-align: center;
+    padding: 50px 24px;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-strong);
+}
+
+.contact-box h2 {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.contact-box p {
+    font-size: 18px;
+    margin-bottom: 22px;
+    color: #e7f0fb;
+}
+
+.footer {
+    background: #0d315a;
+    color: white;
+    text-align: center;
+    padding: 18px;
+    font-size: 15px;
+}
+
+/* -----------------------------
+   DASHBOARD / OWNER
+----------------------------- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 26px;
+}
+
+.stat-card {
+    padding: 20px;
+    border: 1px solid rgba(216, 229, 243, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-card span {
+    color: var(--text-soft);
+    font-weight: 700;
+}
+
+.stat-card strong {
+    font-size: 30px;
+    color: #143b69;
+}
+
+.owner-layout {
+    display: grid;
+    grid-template-columns: 1.45fr 0.85fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.main-area,
+.side-area {
+    display: grid;
+    gap: 24px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 920px;
+}
+
+thead {
+    background: #eef5ff;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e4edf7;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    color: #143b69;
+    font-size: 14px;
+}
+
+td small {
+    color: var(--text-soft);
+}
+
+.alert-list {
+    display: grid;
+    gap: 14px;
+}
+
+.alert-item {
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid #e6edf6;
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: center;
+}
+
+.alert-item.open {
+    background: #fff7f0;
+    border-color: #ffd3b0;
+}
+
+.alert-item.resolved {
+    background: #eef9f1;
+    border-color: #c7ebd1;
+}
+
+.alert-item strong {
+    color: #143b69;
+}
+
+.alert-item p {
+    color: #4c6885;
+    margin: 6px 0;
+}
+
+.alert-item small {
+    color: #6b8199;
+}
+
+/* -----------------------------
+   DRIVER APP
+----------------------------- */
+.driver-summary {
+    padding: 22px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(216, 229, 243, 0.8);
+}
+
+.driver-summary h2 {
+    margin-bottom: 10px;
+}
+
+.driver-summary p {
+    margin-bottom: 8px;
+    color: #45627f;
+}
+
+.card-grid {
+    display: grid;
+    gap: 22px;
+    margin-bottom: 24px;
+}
+
+.card-grid.two {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.card-grid.three {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card-grid.four {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.simple-list {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+}
+
+.simple-list li {
+    padding: 12px 14px;
+    background: #f8fbff;
+    border: 1px solid #e0ebf7;
+    border-radius: 12px;
+    color: #45627f;
+}
+
+.simple-list small {
+    display: block;
+    margin-top: 4px;
+    color: #74879b;
+}
+
+/* -----------------------------
+   TRUCK TYPES PAGE
+----------------------------- */
+.info-card {
+    padding: 24px;
+    border: 1px solid rgba(216, 229, 243, 0.8);
+}
+
+.info-card .badge {
+    display: inline-block;
+    margin-bottom: 12px;
+    background: #edf4ff;
+    color: var(--primary);
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.info-card p {
+    color: #5e7791;
+    margin-bottom: 10px;
+}
+
+/* -----------------------------
+   STATUS PILLS
+----------------------------- */
+.status-pill {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    min-width: 70px;
+    text-align: center;
+}
+
+.status-pill.green {
+    background: #e8f7ed;
+    color: #157347;
+}
+
+.status-pill.orange {
+    background: #fff3e4;
+    color: #c76800;
+}
+
+.status-pill.red {
+    background: #fff0ef;
+    color: #c62828;
+}
+
+/* -----------------------------
+   RANGE / OUTPUT
+----------------------------- */
+input[type="range"] {
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+output {
+    display: inline-block;
+    margin-top: 6px;
+    font-weight: 700;
+    color: var(--primary);
+    background: #edf4ff;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+/* -----------------------------
+   FORM SPACING
+----------------------------- */
+.stacked-form h2 {
+    margin-bottom: 16px;
+}
+
+.stacked-form .btn,
+.stacked-form button {
+    margin-top: 16px;
+}
+
+/* -----------------------------
+   RESPONSIVE
+----------------------------- */
+@media (max-width: 1180px) {
+    .hero-content,
+    .owner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .truck-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid.four {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid,
+    .stats-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-links {
+        display: none;
+    }
+
+    .nav {
+        gap: 10px;
+    }
+
+    .truck-grid,
+    .card-grid.three {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid.two {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-left h1 {
+        font-size: 42px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: min(100% - 24px, 1200px);
+    }
+
+    .navbar,
+    .hero,
+    .stats-section,
+    .truck-types-section,
+    .why-us-section,
+    .logos-section,
+    .contact-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .nav-wrap {
+        min-height: 68px;
+        flex-direction: column;
+        justify-content: center;
+        padding: 12px 0;
+    }
+
+    .nav {
+        justify-content: center;
+    }
+
+    .hero {
+        min-height: auto;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .hero-content,
+    .truck-grid,
+    .why-grid,
+    .stats-section,
+    .stats-grid,
+    .card-grid.four,
+    .card-grid.three {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-left h1 {
+        font-size: 34px;
+    }
+
+    .hero-left p {
+        font-size: 16px;
+    }
+
+    .brand-text h2 {
+        font-size: 20px;
+    }
+
+    .logo {
+        width: 58px;
+        height: 58px;
+    }
+
+    .booking-top {
+        font-size: 20px;
+    }
+
+    .section-head h1,
+    .section-title h2 {
+        font-size: 28px;
+    }
+
+    .contact-box h2 {
+        font-size: 28px;
+    }
+
+    .panel,
+    .driver-summary,
+    .truck-card,
+    .info-card,
+    .why-card {
+        padding: 18px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+}
+
+/* Compact Partner Companies Section */
+.truck-company-showcase {
+    padding: 50px 20px;
+}
+
+.truck-company-showcase .section-title h2 {
+    font-size: 34px;
+    margin-bottom: 8px;
+}
+
+.truck-company-showcase .section-title p {
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.isometric-truck-grid {
+    max-width: 1000px;
+    margin: 24px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px 18px;
+    align-items: start;
+}
+
+.isometric-truck-card {
+    padding: 8px;
+}
+
+.isometric-truck-card img {
+    max-width: 170px;
+    height: 110px;
+    object-fit: contain;
+    margin: 0 auto 10px;
+    filter: drop-shadow(0 8px 14px rgba(15, 58, 104, 0.12));
+}
+
+/* Fix truck name alignment */
+
+.isometric-truck-card {
+    text-align: center;   /* full card center */
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* image + text center */
+}
+
+.isometric-truck-card h3 {
+    text-align: center;
+    width: 100%;
+    margin-top: 8px;
+}
+
+@media (max-width: 992px) {
+    .isometric-truck-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .isometric-truck-card img {
+        max-width: 150px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 640px) {
+    .truck-company-showcase {
+        padding: 40px 16px;
+    }
+
+    .truck-company-showcase .section-title h2 {
+        font-size: 28px;
+    }
+
+    .isometric-truck-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .isometric-truck-card img {
+        max-width: 140px;
+        height: 95px;
+    }
+
+    .isometric-truck-card h3 {
+        font-size: 18px;
+    }
+}
+
+
+
+.contact-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.whatsapp-btn {
+    background: #25D366;
+    color: white;
+}
+
+.whatsapp-btn:hover {
+    background: #1faa55;
+}
+
+.contact-note {
+    margin-top: 18px;
+    color: #e7f0fb;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Update Toll Payment Section */
+.toll-payment-form {
+    background: #ffffff;
+    border: 1px solid #dbe7f3;
+    border-radius: 22px;
+    padding: 26px 22px;
+    box-shadow: 0 10px 24px rgba(15, 58, 104, 0.08);
+}
+
+.toll-payment-form h2 {
+    font-size: 22px;
+    color: #143f72;
+    margin-bottom: 18px;
+    line-height: 1.3;
+}
+
+.toll-payment-form label {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+    color: #143f72;
+    margin-bottom: 10px;
+}
+
+.toll-payment-form input,
+.toll-payment-form select {
+    width: 100%;
+    height: 58px;
+    padding: 14px 18px;
+    font-size: 18px;
+    border: 1.5px solid #c7d7ea;
+    border-radius: 18px;
+    background: #f7fbff;
+    color: #16314f;
+    outline: none;
+    transition: 0.25s ease;
+    margin-bottom: 18px;
+}
+
+.toll-payment-form input:focus,
+.toll-payment-form select:focus {
+    border-color: #0f4a88;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(15, 74, 136, 0.08);
+}
+
+.toll-payment-form .btn {
+    width: 100%;
+    height: 56px;
+    border-radius: 18px;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+
+/* ========================= */
+/* FINAL FORM UNIFORM STYLE  */
+/* ========================= */
+
+.side-area {
+    display: grid;
+    gap: 22px;
+}
+
+/* All 3 forms same card style */
+.side-area .panel,
+.side-area .toll-payment-form {
+    background: #ffffff;
+    border: 1px solid #dbe7f3;
+    border-radius: 22px;
+    padding: 22px 20px;
+    box-shadow: 0 10px 24px rgba(15, 58, 104, 0.08);
+}
+
+/* Title */
+.side-area .panel h2,
+.side-area .toll-payment-form h2 {
+    font-size: 20px;
+    color: #143f72;
+    margin-bottom: 16px;
+}
+
+/* Labels */
+.side-area .stacked-form label,
+.side-area .toll-payment-form label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #143f72;
+    margin-bottom: 8px;
+}
+
+/* Inputs & Select */
+.side-area .stacked-form input,
+.side-area .stacked-form select,
+.side-area .toll-payment-form input,
+.side-area .toll-payment-form select {
+    width: 100%;
+    height: 48px;
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 1.5px solid #c7d7ea;
+    border-radius: 14px;
+    background: #f7fbff;
+    margin-bottom: 14px;
+    outline: none;
+}
+
+/* Focus effect */
+.side-area .stacked-form input:focus,
+.side-area .stacked-form select:focus,
+.side-area .toll-payment-form input:focus,
+.side-area .toll-payment-form select:focus {
+    border-color: #0f4a88;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(15, 74, 136, 0.08);
+}
+
+/* Button */
+.side-area .stacked-form .btn,
+.side-area .toll-payment-form .btn {
+    width: 100%;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+/* Home Booking Form - Compact Size */
+.booking-card {
+    max-width: 480px;   /* size control */
+    margin: 0 auto;     /* center */
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* Header reduce */
+.booking-card .form-header {
+    padding: 14px;
+    font-size: 20px;
+}
+
+/* Body spacing reduce */
+.booking-card form {
+    padding: 18px;
+}
+
+/* Input size reduce */
+.booking-card input,
+.booking-card select {
+    height: 44px;
+    font-size: 15px;
+    padding: 10px 12px;
+    border-radius: 12px;
+}
+
+/* Label small */
+.booking-card label {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+/* Button size */
+.booking-card .btn {
+    height: 44px;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+/* ===== LOGO + TITLE FINAL FIX ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.nav-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0px !important; /* logo & text space reduce */
+}
+
+.logo {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.brand-text {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.brand-text h2 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0px !important;
+    color: #143f72 !important;
+}
+
+.brand-text p {
+    margin: 4px 0 0 0 !important;
+    padding: 0 !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    color: #5f7893 !important;
+}
+
+/* ===== FINAL APP UPGRADE ADDITIONS ===== */
+
+.contact-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.whatsapp-btn {
+    background: #25D366;
+    color: white;
+}
+
+.whatsapp-btn:hover {
+    background: #1faa55;
+}
+
+.contact-note {
+    margin-top: 18px;
+    color: #e7f0fb;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.gps-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.gps-status {
+    font-size: 14px;
+    color: #5f7893;
+    font-weight: 600;
+}
+
+.mobile-booking-cards {
+    display: none;
+}
+
+.mobile-booking-card {
+    background: #f8fbff;
+    border: 1px solid #dce8f4;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.mobile-booking-card h3 {
+    margin-bottom: 8px;
+    color: #143f72;
+}
+
+.live-summary-grid .stat-card strong {
+    font-size: 26px;
+}
+
+.booking-status-form {
+    margin-top: 18px;
+}
+
+@media (max-width: 992px) {
+    .owner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .table-wrap {
+        display: none;
+    }
+
+    .mobile-booking-cards {
+        display: block;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid.two,
+    .card-grid.three,
+    .card-grid.four {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-links {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 12px 18px;
+    }
+
+    .nav-left {
+        gap: 8px;
+    }
+
+    .logo {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    .brand-text h2 {
+        font-size: 24px !important;
+    }
+
+    .brand-text p {
+        font-size: 12px !important;
+    }
+
+    .hero {
+        padding: 26px 18px;
+    }
+
+    .booking-card {
+        max-width: 100%;
+    }
+
+    #bookingForm {
+        padding: 18px;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr 1fr;
+        padding: 20px 18px;
+    }
+
+    .truck-grid,
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .truck-types-section,
+    .why-us-section,
+    .logos-section,
+    .contact-section {
+        padding: 48px 18px;
+    }
+
+    .side-area .panel,
+    .side-area .toll-payment-form {
+        padding: 18px 16px;
+    }
+
+    .side-area .panel h2,
+    .side-area .toll-payment-form h2 {
+        font-size: 20px;
+    }
+
+    .side-area .stacked-form input,
+    .side-area .stacked-form select,
+    .side-area .toll-payment-form input,
+    .side-area .toll-payment-form select {
+        height: 46px;
+        font-size: 15px;
+    }
+
+    .side-area .stacked-form .btn,
+    .side-area .toll-payment-form .btn {
+        height: 46px;
+        font-size: 15px;
+    }
+}
+
+.isometric-truck-card img {
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+.isometric-truck-card h3 {
+    display: block !important;
+    margin: 10px auto 0 !important;
+}
+
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-bg-slider {
+    position: absolute;
+    inset: 0;
+    background-image: url("../images/bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.8s ease-in-out;
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.65),
+        rgba(255, 255, 255, 0.30)
+    );
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}

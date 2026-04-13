@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eagle Transport Service</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='images/eagle-logo.png') }}" alt="Eagle Transport Logo" class="logo">
+            <div class="brand-text">
+                <h2>Eagle Transport</h2>
+                <p>Safe. Fast. Trusted.</p>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="{{ url_for('trucks_page') }}">Truck</a>
+            <a href="#why-us">Why Us</a>
+            <a href="#contact">Contact</a>
+            <a href="{{ url_for('owner_login') }}">Owner</a>
+            <a href="{{ url_for('driver_login') }}">Driver</a>
+        </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container flash-stack" style="margin-top: 18px;">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <section class="hero">
+        <div class="hero-bg-slider" id="heroBgSlider"></div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <div class="hero-left">
+                <span class="hero-badge">Eagle Transport Service</span>
+                <h1>Eagle Transport Service: Fast & Easy Truck Booking Across India.</h1>
+                <p>
+                    Simple booking process. Clear truck options. Reliable service for District, State, and National loads.
+                </p>
+
+                <div class="hero-buttons">
+                    <a href="#booking" class="btn primary-btn">Book Truck Now</a>
+                    <a href="{{ url_for('trucks_page') }}" class="btn secondary-btn">View Truck Types</a>
+                </div>
+            </div>
+
+            <div class="booking-card" id="booking">
+                <div class="booking-top">Truck Booking</div>
+
+                <form id="bookingForm" method="post" action="{{ url_for('book_truck') }}">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="customer_name" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="tel" name="mobile" placeholder="Enter mobile number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pickup Place</label>
+                        <input type="text" name="pickup_location" placeholder="From where?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Drop Place</label>
+                        <input type="text" name="drop_location" placeholder="To where?" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Trip Level</label>
+                        <select id="tripLevel" name="trip_level" required>
+                            <option value="">Select Trip Level</option>
+                            {% for level in trip_levels %}
+                            <option value="{{ level }}">{{ level }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Truck</label>
+                        <select id="truckType" name="truck_type" required>
+                            <option value="">Choose Truck</option>
+                            {% for truck in truck_types %}
+                            <option value="{{ truck.name }}">{{ truck.name }} - {{ truck.capacity }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Goods Type</label>
+                        <input type="text" name="goods_type" placeholder="Example: Cement / Furniture / Rice Bags" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Load Weight (Tons)</label>
+                        <input type="number" id="loadWeight" name="load_weight" step="0.1" min="0.1" placeholder="Example: 2" required>
+                    </div>
+
+                    <div class="estimate-box">
+                        <p><strong>Estimated Price:</strong> <span id="estimateAmount">₹ 0</span></p>
+                    </div>
+
+                    <div class="hero-buttons" style="margin-top: 10px;">
+                        <button type="button" class="btn booking-btn" onclick="calculateFare()">Check Truck Fare</button>
+                        <button type="submit" class="btn primary-btn">Confirm Booking</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stat-box"><h3>8</h3><p>Total Trucks</p></div>
+        <div class="stat-box"><h3>24/7</h3><p>Booking Support</p></div>
+        <div class="stat-box"><h3>3</h3><p>Trip Levels</p></div>
+        <div class="stat-box"><h3>100%</h3><p>Easy Booking</p></div>
+    </section>
+
+    <section class="logos-section">
+        <div class="section-title">
+            <h2>Recent Bookings</h2>
+            <p>Latest truck booking requests</p>
+        </div>
+
+        <div class="card-grid two container" style="margin-top: 24px;">
+            {% for booking in recent_bookings %}
+            <div class="panel">
+                <h3 style="margin-bottom: 10px; color: #143b69;">{{ booking.customer_name }}</h3>
+                <p><strong>Trip:</strong> {{ booking.trip_level }}</p>
+                <p><strong>Route:</strong> {{ booking.pickup_location }} → {{ booking.drop_location }}</p>
+                <p><strong>Truck:</strong> {{ booking.truck_type }}</p>
+                <p><strong>Goods:</strong> {{ booking.goods_type }}</p>
+                <p><strong>Estimated Amount:</strong> ₹{{ booking.estimated_amount }}</p>
+                <p><strong>Status:</strong> {{ booking.status }}</p>
+            </div>
+            {% else %}
+            <div class="panel"><p>No bookings yet.</p></div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="truck-types-section" id="truck-types">
+        <div class="section-title">
+            <h2>Indian Truck Types</h2>
+            <p>Select the correct truck based on your load capacity</p>
+        </div>
+
+        <div class="truck-grid">
+            {% for truck in truck_types %}
+            <div class="truck-card">
+                <div class="truck-icon">{{ truck.icon }}</div>
+                <h3>{{ truck.name }}</h3>
+                <p><strong>Capacity:</strong> {{ truck.capacity }}</p>
+                <p>{{ truck.best_for }}</p>
+                <button class="small-btn" type="button" onclick="selectTruck('{{ truck.name }}')">Select This Truck</button>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="why-us-section" id="why-us">
+        <div class="section-title">
+            <h2>Why Choose Eagle Transport?</h2>
+            <p>Simple booking and trusted service for everyone</p>
+        </div>
+
+        <div class="why-grid">
+            <div class="why-card">
+                <h3>Quick & Easy Booking</h3>
+                <p>Book the perfect truck for your load in just a few simple steps.</p>
+            </div>
+            <div class="why-card">
+                <h3>Local to All-India Routes</h3>
+                <p>Reliable transport services across your city, state, and anywhere in India.</p>
+            </div>
+            <div class="why-card">
+                <h3>Instant WhatsApp Support</h3>
+                <p>Get direct, real-time help through WhatsApp or phone whenever you need it.</p>
+            </div>
+            <div class="why-card">
+                <h3>Real-Time Trip Tracking</h3>
+                <p>Track your goods live, get driver details, and receive instant alerts—all from one simple screen.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="truck-company-showcase">
+    <div class="section-title">
+        <h2>Our Trusted Partners</h2>
+    </div>
+
+    <div class="isometric-truck-grid">
+        <div class="isometric-truck-card">
+            <img src="{{ url_for('static', filename='images/tata-ace.png') }}" alt="Tata Motors Truck">
+            <h3>Tata Motors</h3>
+        </div>
+
+        <div class="isometric-truck-card">
+            <img src="{{ url_for('static', filename='images/ashok-leyland.png') }}" alt="Ashok Leyland Truck">
+            <h3>Ashok Leyland</h3>
+        </div>
+
+        <div class="isometric-truck-card">
+            <img src="{{ url_for('static', filename='images/mahindra-pickup.png') }}" alt="Mahindra Truck">
+            <h3>Mahindra</h3>
+        </div>
+
+        <div class="isometric-truck-card">
+            <img src="{{ url_for('static', filename='images/bharatbenz-tipper.png') }}" alt="BharatBenz Truck">
+            <h3>BharatBenz</h3>
+        </div>
+
+        <div class="isometric-truck-card">
+            <img src="{{ url_for('static', filename='images/eicher-truck.png') }}" alt="Eicher Truck">
+            <h3>Eicher</h3>
+        </div>
+
+        <div class="isometric-truck-card">
+            <img src="{{ url_for('static', filename='images/volvo-truck.png') }}" alt="Volvo Truck">
+            <h3>Volvo</h3>
+        </div>
+    </div>
+</section>
+
+    <section class="contact-section" id="contact">
+        <div class="contact-box">
+            <h2>Need Help for Booking?</h2>
+            <p>Call Eagle Transport or message on WhatsApp for quick support.</p>
+
+            <div class="contact-actions">
+                <a href="tel:+917202045678" class="btn primary-btn">Call Now</a>
+                <a href="https://wa.me/917202045678?text=Hello%20Eagle%20Transport%2C%20I%20want%20to%20book%20a%20truck." target="_blank" class="btn whatsapp-btn">WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 Eagle Transport Service. All Rights Reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Truck Types - Eagle Transport{% endblock %}
+{% block content %}
+<section class="section compact-top">
+    <div class="container">
+        <div class="section-head">
+            <h1>Indian Truck Types</h1>
+            <p>Simple truck reference with approximate carrying capacity.</p>
+        </div>
+        <div class="card-grid three">
+            {% for item in truck_types %}
+            <div class="info-card">
+                <div class="badge">Truck Type</div>
+                <h3>{{ item.name }}</h3>
+                <p><strong>Capacity:</strong> {{ item.capacity }}</p>
+                <p><strong>Use:</strong> {{ item.best_for }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

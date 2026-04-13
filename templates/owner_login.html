@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Owner Login{% endblock %}
+{% block content %}
+<section class="section compact-top">
+    <div class="container narrow">
+        <form class="panel" method="post">
+            <h1>Owner Login</h1>
+            <p class="muted">Demo login: admin / eagle123</p>
+            <label>Username</label>
+            <input type="text" name="username" required>
+            <label>Password</label>
+            <input type="password" name="password" required>
+            <button class="btn btn-primary full">Login</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

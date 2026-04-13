@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% block title %}Owner Dashboard{% endblock %}
+{% block content %}
+<section class="section compact-top">
+    <div class="container">
+        <div class="section-head left">
+            <h1>Owner Dashboard</h1>
+            <p>Easy view of truck health, alerts, drivers, live bookings, tollgate logs, and quick entry forms.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-stack" style="margin-bottom: 18px;">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="stats-grid live-summary-grid">
+            <div class="stat-card"><span>Total Trucks</span><strong>{{ total_trucks }}</strong></div>
+            <div class="stat-card"><span>Active</span><strong>{{ active_trucks }}</strong></div>
+            <div class="stat-card"><span>Live Bookings</span><strong id="liveBookingCount">{{ active_bookings }}</strong></div>
+            <div class="stat-card"><span>Pending Tolls</span><strong id="pendingTollCount">{{ pending_tolls }}</strong></div>
+        </div>
+
+        <div class="owner-layout">
+            <div class="main-area">
+                <div class="panel">
+                    <div class="panel-head">
+                        <h2>Truck Health Overview</h2>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Truck</th>
+                                    <th>Category</th>
+                                    <th>Driver</th>
+                                    <th>Location</th>
+                                    <th>Diesel</th>
+                                    <th>Engine</th>
+                                    <th>Battery</th>
+                                    <th>Tyre</th>
+                                    <th>Score</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="truckTableBody">
+                                {% for truck in trucks %}
+                                <tr>
+                                    <td>{{ truck.truck_name }}<br><small>{{ truck.truck_number }}</small></td>
+                                    <td>{{ truck.category }}</td>
+                                    <td>{{ truck.driver_name }}</td>
+                                    <td>{{ truck.current_location }}</td>
+                                    <td><span class="status-pill {{ truck.diesel_color }}">{{ truck.diesel_percent }}%</span></td>
+                                    <td><span class="status-pill {{ truck.engine_oil_color }}">{{ truck.engine_oil_level }}%</span></td>
+                                    <td><span class="status-pill {{ truck.battery_color }}">{{ truck.battery_voltage }}V</span></td>
+                                    <td>{{ truck.tyre_condition }}</td>
+                                    <td>{{ truck.health_score }}/100</td>
+                                    <td>{{ truck.status }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h2>Live Booking Tracking</h2>
+                        <p class="muted">Owner can update and monitor current booking status here.</p>
+                    </div>
+
+                    <div class="mobile-booking-cards">
+                        {% for booking in bookings %}
+                        <div class="mobile-booking-card">
+                            <h3>{{ booking.customer_name }}</h3>
+                            <p><strong>Route:</strong> {{ booking.pickup_location }} → {{ booking.drop_location }}</p>
+                            <p><strong>Truck:</strong> {{ booking.truck_type }}</p>
+                            <p><strong>Status:</strong> {{ booking.status }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Mobile</th>
+                                    <th>Route</th>
+                                    <th>Truck</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingTableBody">
+                                {% for booking in bookings %}
+                                <tr>
+                                    <td>{{ booking.customer_name }}</td>
+                                    <td>{{ booking.mobile }}</td>
+                                    <td>{{ booking.pickup_location }} → {{ booking.drop_location }}</td>
+                                    <td>{{ booking.truck_type }}</td>
+                                    <td>₹{{ booking.estimated_amount }}</td>
+                                    <td>{{ booking.status }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <form class="panel stacked-form booking-status-form" method="post" action="{{ url_for('update_booking_status') }}">
+                        <h2>Update Booking Status</h2>
+                        <label>Select Booking</label>
+                        <select name="booking_id" required>
+                            {% for booking in bookings %}
+                            <option value="{{ booking.id }}">{{ booking.customer_name }} - {{ booking.pickup_location }} to {{ booking.drop_location }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <label>Status</label>
+                        <select name="status" required>
+                            <option>New</option>
+                            <option>Confirmed</option>
+                            <option>In Transit</option>
+                            <option>Delivered</option>
+                            <option>Cancelled</option>
+                        </select>
+
+                        <button class="btn btn-primary full">Update Booking</button>
+                    </form>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h2>Emergency Alerts</h2>
+                    </div>
+                    <div class="alert-list" id="alertList">
+                        {% for alert in alerts %}
+                        <div class="alert-item {{ 'resolved' if alert.status == 'Resolved' else 'open' }}">
+                            <div>
+                                <strong>{{ alert.truck_name }} - {{ alert.alert_type }}</strong>
+                                <p>{{ alert.message }}</p>
+                                <small>{{ alert.created_at }} | {{ alert.status }}</small>
+                            </div>
+                            {% if alert.status != 'Resolved' %}
+                            <form method="post" action="{{ url_for('resolve_alert', alert_id=alert.id) }}">
+                                <button class="btn btn-small">Mark as Resolved</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h2>Tollgate Details</h2>
+                        <p style="color:#5f7893; margin-top:6px;">Truck toll crossing time, debit amount, payment status and route details.</p>
+                    </div>
+
+                    <div class="stats-grid" style="margin-bottom: 20px;">
+                        <div class="stat-card">
+                            <span>Total Toll Entries</span>
+                            <strong>{{ toll_logs|length }}</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span>Total Toll Amount</span>
+                            <strong id="totalTollAmount">₹{{ total_toll_amount }}</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span>FASTag / Payments</span>
+                            <strong>{{ toll_logs|length }}</strong>
+                        </div>
+                        <div class="stat-card">
+                            <span>Recent Route Logs</span>
+                            <strong>{{ toll_logs|length }}</strong>
+                        </div>
+                    </div>
+
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Truck</th>
+                                    <th>Driver</th>
+                                    <th>Route</th>
+                                    <th>Tollgate</th>
+                                    <th>Crossed Time</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tollTableBody">
+                                {% for toll in toll_logs %}
+                                <tr>
+                                    <td>{{ toll.truck_name }}<br><small>{{ toll.truck_number }}</small></td>
+                                    <td>{{ toll.driver_name }}</td>
+                                    <td>{{ toll.route_name }}</td>
+                                    <td>{{ toll.toll_name }}</td>
+                                    <td>{{ toll.crossed_time }}</td>
+                                    <td>₹{{ toll.amount_paid }}</td>
+                                    <td>{{ toll.payment_method }}</td>
+                                    <td>{{ toll.payment_status }}</td>
+                                    <td>{{ toll.notes or '-' }}</td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="9">No tollgate details available.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="side-area">
+                <form class="panel stacked-form" method="post" action="{{ url_for('add_truck') }}">
+                    <h2>Add New Truck</h2>
+                    <label>Truck Name</label>
+                    <input type="text" name="truck_name" required>
+                    <label>Truck Number</label>
+                    <input type="text" name="truck_number" required>
+                    <label>Category</label>
+                    <select name="category" required>
+                        <option>Mini</option>
+                        <option>Light</option>
+                        <option>Heavy</option>
+                        <option>Trailer</option>
+                        <option>Container</option>
+                    </select>
+                    <label>Capacity (Tons)</label>
+                    <input type="number" step="0.1" name="capacity_tons" required>
+                    <label>Driver Name</label>
+                    <input type="text" name="driver_name" required>
+                    <label>Current Location</label>
+                    <input type="text" name="current_location" required>
+                    <button class="btn btn-primary full">Add Truck</button>
+                </form>
+
+                <form class="panel stacked-form" method="post" action="{{ url_for('add_driver') }}">
+                    <h2>Add New Driver</h2>
+                    <label>Full Name</label>
+                    <input type="text" name="full_name" required>
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                    <label>Password</label>
+                    <input type="text" name="password" value="driver123" required>
+                    <label>Mobile</label>
+                    <input type="text" name="mobile" required>
+                    <label>Assign Truck</label>
+                    <select name="assigned_truck_id" required>
+                        {% for truck in trucks %}
+                        <option value="{{ truck.id }}">{{ truck.truck_name }} - {{ truck.truck_number }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-primary full">Add Driver</button>
+                </form>
+
+                <form method="post" action="{{ url_for('update_toll_payment') }}" class="panel stacked-form toll-payment-form">
+                    <h2>💰 Update Toll Payment</h2>
+
+                    <label>Select Toll Entry</label>
+                    <select name="toll_id" required>
+                        {% for toll in toll_logs %}
+                        <option value="{{ toll.id }}">
+                            {{ toll.truck_name }} - {{ toll.toll_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <label>Amount Paid</label>
+                    <input type="number" step="0.01" name="amount_paid" required>
+
+                    <label>Payment Method</label>
+                    <select name="payment_method" required>
+                        <option>FASTag</option>
+                        <option>UPI</option>
+                        <option>Cash</option>
+                    </select>
+
+                    <label>Payment Status</label>
+                    <select name="payment_status" required>
+                        <option>Paid</option>
+                        <option>Pending</option>
+                        <option>Failed</option>
+                    </select>
+
+                    <button class="btn btn-primary full">Update Payment</button>
+                </form>
+            </aside>
+        </div>
+    </div>
+</section>
+{% endblock %}

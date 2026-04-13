@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %}Driver App{% endblock %}
+{% block content %}
+<section class="section compact-top">
+    <div class="container">
+        <div class="section-head left">
+            <h1>Driver App</h1>
+            <p>Simple update page for drivers during travel.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-stack" style="margin-bottom: 18px;">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="driver-summary panel">
+            <h2>{{ driver.full_name }}</h2>
+            <p><strong>Assigned Truck:</strong> {{ truck.truck_name }} ({{ truck.truck_number }})</p>
+            <p><strong>Current Location:</strong> <span id="driverLocationText">{{ truck.current_location }}</span></p>
+            <p><strong>Diesel:</strong> {{ truck.diesel_percent }}%</p>
+            <p><strong>Engine Oil:</strong> {{ truck.engine_oil_level }}%</p>
+            <p><strong>Battery:</strong> {{ truck.battery_voltage }}V</p>
+
+            <div class="gps-actions">
+                <button type="button" class="btn btn-primary" onclick="captureDriverLocation()">📍 Use Current GPS</button>
+                <span id="gpsStatus" class="gps-status">Location not updated yet</span>
+            </div>
+        </div>
+
+        <div class="card-grid two">
+            <form class="panel stacked-form" method="post" action="{{ url_for('add_tyre_log') }}">
+                <h2>Tyre Management</h2>
+                <label>Tyre Position</label>
+                <select name="tyre_position" required>
+                    <option>Front Left</option>
+                    <option>Front Right</option>
+                    <option>Rear Left</option>
+                    <option>Rear Right</option>
+                    <option>Spare</option>
+                </select>
+                <label>Reason for Change</label>
+                <input type="text" name="reason" required>
+                <label>Tyre Condition</label>
+                <select name="tyre_condition" required>
+                    <option>Good</option>
+                    <option>Moderate</option>
+                    <option>Poor</option>
+                </select>
+                <button class="btn btn-primary full">Save Tyre Log</button>
+            </form>
+
+            <form class="panel stacked-form" method="post" action="{{ url_for('add_fuel_log') }}">
+                <h2>Fuel Entry</h2>
+                <label>Litres</label>
+                <input type="number" step="0.1" name="litres" required>
+                <label>Bunk Name / Place</label>
+                <input type="text" name="bunk_name" required>
+                <label>Location</label>
+                <input type="text" name="location" required>
+                <label>Current Diesel %</label>
+                <input type="number" step="0.1" name="diesel_percent" min="0" max="100" required>
+                <button class="btn btn-primary full">Save Fuel Log</button>
+            </form>
+        </div>
+
+        <form class="panel stacked-form" method="post" action="{{ url_for('driver_toll_entry') }}">
+            <h2>🚧 Tollgate Entry</h2>
+            <label>Route Name</label>
+            <input type="text" name="route_name" placeholder="Chennai to Salem" required>
+
+            <label>Tollgate Name</label>
+            <input type="text" name="toll_name" placeholder="Sriperumbudur Toll" required>
+
+            <label>Notes (Optional)</label>
+            <input type="text" name="notes" placeholder="Traffic / delay etc">
+
+            <button class="btn btn-primary full">Save Toll Entry</button>
+        </form>
+
+        <form class="panel stacked-form" method="post" action="{{ url_for('driver_status_update') }}">
+            <h2>Status Check</h2>
+            <div class="card-grid four">
+                <div>
+                    <label>Coolant Level %</label>
+                    <input type="range" name="coolant_level" min="0" max="100" value="{{ truck.coolant_level }}" oninput="this.nextElementSibling.value = this.value">
+                    <output>{{ truck.coolant_level }}</output>
+                </div>
+                <div>
+                    <label>Engine Oil %</label>
+                    <input type="range" name="engine_oil_level" min="0" max="100" value="{{ truck.engine_oil_level }}" oninput="this.nextElementSibling.value = this.value">
+                    <output>{{ truck.engine_oil_level }}</output>
+                </div>
+                <div>
+                    <label>Brake Oil %</label>
+                    <input type="range" name="brake_oil_level" min="0" max="100" value="{{ truck.brake_oil_level }}" oninput="this.nextElementSibling.value = this.value">
+                    <output>{{ truck.brake_oil_level }}</output>
+                </div>
+                <div>
+                    <label>Battery Voltage</label>
+                    <input type="number" name="battery_voltage" step="0.1" value="{{ truck.battery_voltage }}" required>
+                </div>
+            </div>
+            <label>Current Location</label>
+            <input type="text" id="currentLocationInput" name="current_location" value="{{ truck.current_location }}" required>
+            <button class="btn btn-primary">Update Truck Health</button>
+        </form>
+
+        <div class="card-grid two">
+            <div class="panel">
+                <h2>Recent Tyre Logs</h2>
+                <ul class="simple-list">
+                    {% for row in tyre_logs %}
+                    <li><strong>{{ row.tyre_position }}</strong> - {{ row.reason }} <small>{{ row.created_at }}</small></li>
+                    {% else %}
+                    <li>No tyre logs yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="panel">
+                <h2>Recent Fuel Logs</h2>
+                <ul class="simple-list">
+                    {% for row in fuel_logs %}
+                    <li><strong>{{ row.litres }} L</strong> - {{ row.bunk_name }}, {{ row.location }} <small>{{ row.created_at }}</small></li>
+                    {% else %}
+                    <li>No fuel logs yet.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>Recent Toll Entries</h2>
+            <ul class="simple-list">
+                {% for row in toll_entries %}
+                <li>
+                    <strong>{{ row.toll_name }}</strong> - {{ row.route_name }}
+                    <small>{{ row.crossed_time }} | {{ row.payment_status }}</small>
+                </li>
+                {% else %}
+                <li>No toll entries yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}
