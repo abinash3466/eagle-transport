@@ -219,3 +219,43 @@ function startHeroBackgroundSlider() {
 document.addEventListener("DOMContentLoaded", function () {
     startHeroBackgroundSlider();
 });
+
+function startHeroBackgroundSlider() {
+    const heroBgSlider = document.getElementById("heroBgSlider");
+    if (!heroBgSlider) return;
+
+    const heroImages = [
+        "/static/images/bg1.jpg",
+        "/static/images/bg2.jpg",
+        "/static/images/bg3.jpg",
+        "/static/images/bg4.jpg",
+        "/static/images/bg5.jpg"
+    ];
+
+    let heroIndex = 0;
+    heroBgSlider.style.backgroundImage = `url('${heroImages[0]}')`;
+
+    setInterval(() => {
+        heroIndex = (heroIndex + 1) % heroImages.length;
+        heroBgSlider.style.backgroundImage = `url('${heroImages[heroIndex]}')`;
+    }, 3000);
+}
+
+function initMobileMenu() {
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+
+    if (!menuToggle || !mobileNav) return;
+
+    menuToggle.addEventListener("click", function () {
+        mobileNav.classList.toggle("show");
+    });
+
+    mobileNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", function () {
+            mobileNav.classList.remove("show");
+        });
+    });
+    initMobileMenu();
+    startHeroBackgroundSlider();
+}
