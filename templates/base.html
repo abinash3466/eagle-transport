@@ -11,7 +11,11 @@
     <header class="site-header">
         <div class="container nav-wrap">
             <a href="{{ url_for('index') }}" class="brand">Eagle <span>Transport</span></a>
-            <nav class="nav">
+
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+
+            <nav class="nav" id="mobileNav">
                 <a href="{{ url_for('index') }}">Home</a>
                 <a href="{{ url_for('trucks_page') }}">Trucks</a>
                 <a href="{{ url_for('owner_login') }}">Owner</a>
