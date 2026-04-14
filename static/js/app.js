@@ -202,7 +202,7 @@ function startHeroBackgroundSlider() {
     setInterval(() => {
         heroIndex = (heroIndex + 1) % heroImages.length;
         applyHeroBackground();
-    }, 3000);
+    }, 30000);
 
     window.addEventListener("resize", applyHeroBackground);
 }
