@@ -164,7 +164,7 @@ async function pollDashboardSummary() {
 
 function startHeroBackgroundSlider() {
     const heroBgSlider = document.getElementById("heroBgSlider");
-    if (!heroBgSlider) return;
+    const heroTextWrap = document.querySelector(".hero-text-wrap");
 
     const heroImages = [
         "/static/images/bg1.jpg",
@@ -175,14 +175,37 @@ function startHeroBackgroundSlider() {
     ];
 
     let heroIndex = 0;
-    heroBgSlider.style.backgroundImage = `url('${heroImages[0]}')`;
+
+    function applyHeroBackground() {
+        const imageUrl = heroImages[heroIndex];
+
+        if (window.innerWidth <= 992) {
+            if (heroTextWrap) {
+                heroTextWrap.style.backgroundImage =
+                    `linear-gradient(rgba(255,255,255,0.58), rgba(255,255,255,0.38)), url('${imageUrl}')`;
+            }
+            if (heroBgSlider) {
+                heroBgSlider.style.backgroundImage = "none";
+            }
+        } else {
+            if (heroBgSlider) {
+                heroBgSlider.style.backgroundImage = `url('${imageUrl}')`;
+            }
+            if (heroTextWrap) {
+                heroTextWrap.style.backgroundImage = "none";
+            }
+        }
+    }
+
+    applyHeroBackground();
 
     setInterval(() => {
         heroIndex = (heroIndex + 1) % heroImages.length;
-        heroBgSlider.style.backgroundImage = `url('${heroImages[heroIndex]}')`;
+        applyHeroBackground();
     }, 3000);
-}
 
+    window.addEventListener("resize", applyHeroBackground);
+}
 function initMobileMenu() {
     const menuToggle = document.getElementById("menuToggle");
     const mobileNav = document.getElementById("mobileNav");
