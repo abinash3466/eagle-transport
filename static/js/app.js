@@ -155,7 +155,7 @@ async function pollDashboardSummary() {
         if (liveBookingCount) liveBookingCount.textContent = data.active_bookings;
         if (pendingTollCount) pendingTollCount.textContent = data.pending_tolls;
         if (totalTollAmount) {
-            totalTollAmount.textContent = "₹" + Number(data.total_toll_amount).toLocaleString("en-IN");
+            totalTollAmount.textContent = "₹ " + Number(data.total_toll_amount).toLocaleString("en-IN");
         }
     } catch (error) {
         console.log("Summary polling failed");
@@ -185,11 +185,7 @@ function startHeroBackgroundSlider() {
 
 function initMobileMenu() {
     const menuToggle = document.getElementById("menuToggle");
-
-    const mobileNav =
-        document.getElementById("mobileNav") ||
-        document.querySelector(".nav-links") ||
-        document.querySelector(".nav");
+    const mobileNav = document.getElementById("mobileNav");
 
     if (!menuToggle || !mobileNav) return;
 
