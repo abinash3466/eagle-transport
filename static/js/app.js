@@ -195,26 +195,8 @@ function initMobileMenu() {
     });
 
     mobileNav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", function (e) {
-            const href = link.getAttribute("href");
-
-            if (href && href.startsWith("#")) {
-                e.preventDefault();
-
-                const target = document.querySelector(href);
-                if (target) {
-                    mobileNav.classList.remove("show");
-
-                    setTimeout(() => {
-                        target.scrollIntoView({
-                            behavior: "smooth",
-                            block: "start"
-                        });
-                    }, 100);
-                }
-            } else {
-                mobileNav.classList.remove("show");
-            }
+        link.addEventListener("click", function () {
+            mobileNav.classList.remove("show");
         });
     });
 

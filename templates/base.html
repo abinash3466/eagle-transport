@@ -8,22 +8,26 @@
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="container nav-wrap">
-            <a href="/" class="brand">
-                Eagle <span>Transport</span>
+    <header class="base-navbar">
+        <div class="base-nav-left">
+            <a href="/" class="base-brand-wrap">
+                <img src="{{ url_for('static', filename='images/eagle-logo.png') }}" alt="Eagle Transport Logo" class="base-logo">
+                <div class="base-brand-text">
+                    <h2>Eagle Transport</h2>
+                    <p>Safe. Fast. Trusted.</p>
+                </div>
             </a>
-
-            <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">☰</button>
-
-            <nav class="nav" id="mobileNav">
-                <a href="/">Home</a>
-                <a href="{{ url_for('trucks_page') }}">Trucks</a>
-                <a href="{{ url_for('owner_login') }}">Owner</a>
-                <a href="{{ url_for('driver_login') }}">Driver</a>
-                <a href="{{ url_for('logout') }}">Logout</a>
-            </nav>
         </div>
+
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">☰</button>
+
+        <nav class="base-nav-links" id="mobileNav">
+            <a href="/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a>
+            <a href="{{ url_for('trucks_page') }}" class="{% if request.path == url_for('trucks_page') %}active-link{% endif %}">Trucks</a>
+            <a href="{{ url_for('owner_login') }}" class="{% if request.path == url_for('owner_login') or request.path == url_for('owner_dashboard') %}active-link{% endif %}">Owner</a>
+            <a href="{{ url_for('driver_login') }}" class="{% if request.path == url_for('driver_login') or request.path == url_for('driver_app') %}active-link{% endif %}">Driver</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
     </header>
 
     {% block content %}{% endblock %}
