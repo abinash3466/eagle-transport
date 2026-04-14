@@ -1562,6 +1562,7 @@ body {
     height: 46px;
     border-radius: 12px;
     cursor: pointer;
+     z-index: 1300;
 }
 
 .hero {
