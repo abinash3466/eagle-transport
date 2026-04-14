@@ -27,7 +27,9 @@ function calculateFare() {
     else if (truckType === "Trailer" || truckType === "Trailer Truck") price += 7000;
     else if (truckType === "Container Truck") price += 6500;
 
-    if (loadWeight > 0) price += Math.round(loadWeight * 1000);
+    if (loadWeight > 0) {
+        price += Math.round(loadWeight * 1000);
+    }
 
     if (!tripLevel || !truckType || loadWeight <= 0) {
         estimate.innerText = "₹ 0";
@@ -40,8 +42,14 @@ function calculateFare() {
 function selectTruck(truckName) {
     const truckDropdown = document.getElementById("truckType");
     const bookingSection = document.getElementById("booking");
-    if (truckDropdown) truckDropdown.value = truckName;
-    if (bookingSection) bookingSection.scrollIntoView({ behavior: "smooth" });
+
+    if (truckDropdown) {
+        truckDropdown.value = truckName;
+    }
+
+    if (bookingSection) {
+        bookingSection.scrollIntoView({ behavior: "smooth" });
+    }
 }
 
 async function captureDriverLocation() {
@@ -96,6 +104,7 @@ async function captureDriverLocation() {
 
 async function requestBrowserNotificationPermission() {
     if (!("Notification" in window)) return;
+
     if (Notification.permission === "default") {
         await Notification.requestPermission();
     }
@@ -103,6 +112,7 @@ async function requestBrowserNotificationPermission() {
 
 function showBrowserNotification(title, body) {
     if (!("Notification" in window)) return;
+
     if (Notification.permission === "granted") {
         new Notification(title, { body });
     }
@@ -124,6 +134,7 @@ async function pollOwnerAlerts() {
             const latest = openAlerts[0];
             showBrowserNotification("Eagle Transport Alert", `${latest.alert_type}: ${latest.message}`);
         }
+
         lastAlertCount = openAlerts.length;
     } catch (error) {
         console.log("Alert polling failed");
@@ -143,10 +154,68 @@ async function pollDashboardSummary() {
 
         if (liveBookingCount) liveBookingCount.textContent = data.active_bookings;
         if (pendingTollCount) pendingTollCount.textContent = data.pending_tolls;
-        if (totalTollAmount) totalTollAmount.textContent = "₹" + Number(data.total_toll_amount).toLocaleString("en-IN");
+        if (totalTollAmount) {
+            totalTollAmount.textContent = "₹" + Number(data.total_toll_amount).toLocaleString("en-IN");
+        }
     } catch (error) {
         console.log("Summary polling failed");
     }
+}
+
+function startHeroBackgroundSlider() {
+    const heroBgSlider = document.getElementById("heroBgSlider");
+    if (!heroBgSlider) return;
+
+    const heroImages = [
+        "/static/images/bg1.jpg",
+        "/static/images/bg2.jpg",
+        "/static/images/bg3.jpg",
+        "/static/images/bg4.jpg",
+        "/static/images/bg5.jpg"
+    ];
+
+    let heroIndex = 0;
+    heroBgSlider.style.backgroundImage = `url('${heroImages[0]}')`;
+
+    setInterval(() => {
+        heroIndex = (heroIndex + 1) % heroImages.length;
+        heroBgSlider.style.backgroundImage = `url('${heroImages[heroIndex]}')`;
+    }, 3000);
+}
+
+function initMobileMenu() {
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileNav = document.getElementById("mobileNav");
+
+    if (!menuToggle || !mobileNav) return;
+
+    menuToggle.addEventListener("click", function () {
+        mobileNav.classList.toggle("show");
+    });
+
+    mobileNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", function (e) {
+            const href = link.getAttribute("href");
+
+            if (href && href.startsWith("#")) {
+                e.preventDefault();
+
+                const target = document.querySelector(href);
+                if (target) {
+                    mobileNav.classList.remove("show");
+
+                    setTimeout(() => {
+                        target.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    }, 100);
+                }
+            } else {
+                mobileNav.classList.remove("show");
+            }
+        });
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -185,77 +254,16 @@ document.addEventListener("DOMContentLoaded", function () {
             if (mobile.value.trim().length < 10) {
                 event.preventDefault();
                 alert("Please enter a valid mobile number.");
+                return;
             }
         });
     }
 
+    initMobileMenu();
+    startHeroBackgroundSlider();
     requestBrowserNotificationPermission();
     pollOwnerAlerts();
     pollDashboardSummary();
     setInterval(pollOwnerAlerts, 15000);
     setInterval(pollDashboardSummary, 15000);
 });
-
-const heroImages = [
-    "/static/images/bg1.jpg",
-    "/static/images/bg2.jpg",
-    "/static/images/bg3.jpg",
-    "/static/images/bg4.jpg",
-    "/static/images/bg5.jpg"
-];
-
-let heroIndex = 0;
-
-function startHeroBackgroundSlider() {
-    const heroBgSlider = document.getElementById("heroBgSlider");
-    if (!heroBgSlider) return;
-
-    setInterval(() => {
-        heroIndex = (heroIndex + 1) % heroImages.length;
-        heroBgSlider.style.backgroundImage = `url('${heroImages[heroIndex]}')`;
-    }, 50000);
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    startHeroBackgroundSlider();
-});
-
-function startHeroBackgroundSlider() {
-    const heroBgSlider = document.getElementById("heroBgSlider");
-    if (!heroBgSlider) return;
-
-    const heroImages = [
-        "/static/images/bg1.jpg",
-        "/static/images/bg2.jpg",
-        "/static/images/bg3.jpg",
-        "/static/images/bg4.jpg",
-        "/static/images/bg5.jpg"
-    ];
-
-    let heroIndex = 0;
-    heroBgSlider.style.backgroundImage = `url('${heroImages[0]}')`;
-
-    setInterval(() => {
-        heroIndex = (heroIndex + 1) % heroImages.length;
-        heroBgSlider.style.backgroundImage = `url('${heroImages[heroIndex]}')`;
-    }, 3000);
-}
-
-function initMobileMenu() {
-    const menuToggle = document.getElementById("menuToggle");
-    const mobileNav = document.getElementById("mobileNav");
-
-    if (!menuToggle || !mobileNav) return;
-
-    menuToggle.addEventListener("click", function () {
-        mobileNav.classList.toggle("show");
-    });
-
-    mobileNav.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", function () {
-            mobileNav.classList.remove("show");
-        });
-    });
-    initMobileMenu();
-    startHeroBackgroundSlider();
-}
