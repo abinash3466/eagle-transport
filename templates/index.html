@@ -41,10 +41,12 @@
     {% endwith %}
 
     <!-- HERO SECTION -->
-    <section class="hero">
-        <div class="hero-bg-slider" id="heroBgSlider"></div>
-        <div class="hero-overlay"></div>
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="hero-bg-slider" id="heroBgSlider"></div>
+    <div class="hero-overlay"></div>
 
+    <div class="hero-inner">
         <div class="hero-text-wrap">
             <div class="hero-left">
                 <span class="hero-badge">Eagle Transport Service</span>
@@ -59,11 +61,8 @@
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- BOOKING SECTION -->
-    <section class="booking-section" id="booking">
-        <div class="booking-card">
+        <div class="booking-card hero-booking-card" id="booking">
             <div class="booking-top">Truck Booking</div>
 
             <form id="bookingForm" method="post" action="{{ url_for('book_truck') }}">
@@ -127,7 +126,8 @@
                 </div>
             </form>
         </div>
-    </section>
+    </div>
+</section>
 
     <section class="stats-section">
         <div class="stat-box"><h3>8</h3><p>Total Trucks</p></div>
