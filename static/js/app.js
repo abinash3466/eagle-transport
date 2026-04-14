@@ -185,11 +185,16 @@ function startHeroBackgroundSlider() {
 
 function initMobileMenu() {
     const menuToggle = document.getElementById("menuToggle");
-    const mobileNav = document.getElementById("mobileNav");
+
+    const mobileNav =
+        document.getElementById("mobileNav") ||
+        document.querySelector(".nav-links") ||
+        document.querySelector(".nav");
 
     if (!menuToggle || !mobileNav) return;
 
-    menuToggle.addEventListener("click", function () {
+    menuToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
         mobileNav.classList.toggle("show");
     });
 
@@ -215,6 +220,12 @@ function initMobileMenu() {
                 mobileNav.classList.remove("show");
             }
         });
+    });
+
+    document.addEventListener("click", function (e) {
+        if (!mobileNav.contains(e.target) && !menuToggle.contains(e.target)) {
+            mobileNav.classList.remove("show");
+        }
     });
 }
 
