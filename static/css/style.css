@@ -20,20 +20,19 @@
     --radius: 20px;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Montserrat', sans-serif !important;
     background: var(--bg);
     color: var(--text);
     line-height: 1.5;
 }
 
-/* -----------------------------
-   GLOBAL
------------------------------ */
 a {
     text-decoration: none;
 }
@@ -136,6 +135,7 @@ img {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+    position: relative;
 }
 
 .brand {
@@ -143,6 +143,7 @@ img {
     font-weight: 800;
     color: #133b69;
     letter-spacing: 0.3px;
+    text-decoration: none;
 }
 
 .brand span {
@@ -162,6 +163,7 @@ img {
     padding: 10px 14px;
     border-radius: 10px;
     transition: 0.25s ease;
+    text-decoration: none;
 }
 
 .nav a:hover {
@@ -186,29 +188,45 @@ img {
 }
 
 .nav-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0px !important;
 }
 
 .logo {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: contain !important;
+    margin: 0 !important;
+    padding: 0 !important;
     border-radius: 50%;
+}
+
+.brand-text {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .brand-text h2 {
     margin: 0 !important;
-    font-size: 26px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.5px !important;
+    padding: 0 !important;
+    font-size: 30px !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0px !important;
+    color: #143f72 !important;
 }
 
 .brand-text p {
-    margin: 2px 0 0 0 !important;
-    font-size: 14px !important;
-    color: #5b6f86 !important;
+    margin: 4px 0 0 0 !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    color: #5f7893 !important;
 }
 
 .nav-links {
@@ -217,14 +235,21 @@ img {
 }
 
 .nav-links a {
-    text-decoration: none;
     color: #143f72;
     font-weight: 600;
     transition: 0.3s;
+    padding: 10px 12px;
+    border-radius: 10px;
 }
 
 .nav-links a:hover {
     color: var(--secondary);
+    background: #eef5ff;
+}
+
+.nav-links a.active-link {
+    color: #ff8a1d !important;
+    background: #fff3e6;
 }
 
 /* -----------------------------
@@ -286,12 +311,23 @@ img {
    HERO HOME
 ----------------------------- */
 .hero {
-    min-height: 95vh;
-    background: url("../images/home-bg.jpg") center/cover no-repeat;
+    min-height: 88vh;
     position: relative;
     display: flex;
     align-items: center;
-    padding: 60px 50px;
+    padding: 60px 50px 140px;
+    overflow: hidden;
+}
+
+.hero-bg-slider {
+    position: absolute;
+    inset: 0;
+    background-image: url("../images/bg1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.8s ease-in-out;
+    z-index: 0;
 }
 
 .hero-overlay {
@@ -302,16 +338,14 @@ img {
         rgba(255, 255, 255, 0.65),
         rgba(255, 255, 255, 0.30)
     );
+    z-index: 1;
 }
 
-.hero-content {
+.hero-text-wrap {
     position: relative;
     z-index: 2;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 40px;
-    align-items: center;
+    max-width: 760px;
 }
 
 .hero-left {
@@ -350,6 +384,21 @@ img {
 }
 
 /* -----------------------------
+   BOOKING SECTION
+----------------------------- */
+.booking-section {
+    position: relative;
+    padding: 0 20px 30px;
+    margin-top: -95px;
+    z-index: 5;
+}
+
+.booking-section .booking-card {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* -----------------------------
    PANELS / CARDS / FORM
 ----------------------------- */
 .panel,
@@ -384,6 +433,7 @@ img {
 .booking-card {
     overflow: hidden;
     box-shadow: 0 16px 40px rgba(11, 47, 90, 0.16);
+    border-radius: 20px;
 }
 
 .booking-top {
@@ -396,22 +446,22 @@ img {
 }
 
 #bookingForm {
-    padding: 26px;
+    padding: 18px;
 }
 
 .stacked-form label,
 .form-group label,
 .panel label {
     display: block;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
     color: #14385f;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     margin-top: 12px;
 }
 
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .form-group input,
@@ -420,8 +470,9 @@ img {
 .panel select,
 .panel textarea {
     width: 100%;
-    padding: 14px 14px;
-    font-size: 16px;
+    height: 44px;
+    padding: 10px 12px;
+    font-size: 15px;
     border: 1px solid #d5e0ee;
     border-radius: 12px;
     background: #f8fbff;
@@ -441,18 +492,18 @@ img {
 .estimate-box {
     background: #edf5ff;
     border: 1px solid #d8e9ff;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-radius: 12px;
-    margin: 18px 0;
+    margin: 12px 0;
     color: #143a65;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .booking-btn {
     width: 100%;
     background: #103d72;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .booking-btn:hover {
@@ -862,146 +913,8 @@ output {
 }
 
 /* -----------------------------
-   RESPONSIVE
+   PARTNER COMPANIES
 ----------------------------- */
-@media (max-width: 1180px) {
-    .hero-content,
-    .owner-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .truck-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .why-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .card-grid.four {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .stats-grid,
-    .stats-section {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 992px) {
-    .nav-links {
-        display: none;
-    }
-
-    .nav {
-        gap: 10px;
-    }
-
-    .truck-grid,
-    .card-grid.three {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .card-grid.two {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-left h1 {
-        font-size: 42px;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: min(100% - 24px, 1200px);
-    }
-
-    .navbar,
-    .hero,
-    .stats-section,
-    .truck-types-section,
-    .why-us-section,
-    .logos-section,
-    .contact-section {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .nav-wrap {
-        min-height: 68px;
-        flex-direction: column;
-        justify-content: center;
-        padding: 12px 0;
-    }
-
-    .nav {
-        justify-content: center;
-    }
-
-    .hero {
-        min-height: auto;
-        padding-top: 40px;
-        padding-bottom: 40px;
-    }
-
-    .hero-content,
-    .truck-grid,
-    .why-grid,
-    .stats-section,
-    .stats-grid,
-    .card-grid.four,
-    .card-grid.three {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-left h1 {
-        font-size: 34px;
-    }
-
-    .hero-left p {
-        font-size: 16px;
-    }
-
-    .brand-text h2 {
-        font-size: 20px;
-    }
-
-    .logo {
-        width: 58px;
-        height: 58px;
-    }
-
-    .booking-top {
-        font-size: 20px;
-    }
-
-    .section-head h1,
-    .section-title h2 {
-        font-size: 28px;
-    }
-
-    .contact-box h2 {
-        font-size: 28px;
-    }
-
-    .panel,
-    .driver-summary,
-    .truck-card,
-    .info-card,
-    .why-card {
-        padding: 18px;
-    }
-
-    .btn {
-        width: 100%;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-}
-
-/* Compact Partner Companies Section */
 .truck-company-showcase {
     padding: 50px 20px;
 }
@@ -1027,6 +940,10 @@ output {
 
 .isometric-truck-card {
     padding: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .isometric-truck-card img {
@@ -1035,60 +952,19 @@ output {
     object-fit: contain;
     margin: 0 auto 10px;
     filter: drop-shadow(0 8px 14px rgba(15, 58, 104, 0.12));
-}
-
-/* Fix truck name alignment */
-
-.isometric-truck-card {
-    text-align: center;   /* full card center */
-    display: flex;
-    flex-direction: column;
-    align-items: center;  /* image + text center */
+    display: block !important;
 }
 
 .isometric-truck-card h3 {
     text-align: center;
     width: 100%;
-    margin-top: 8px;
+    margin: 10px auto 0 !important;
+    display: block !important;
 }
 
-@media (max-width: 992px) {
-    .isometric-truck-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .isometric-truck-card img {
-        max-width: 150px;
-        height: 100px;
-    }
-}
-
-@media (max-width: 640px) {
-    .truck-company-showcase {
-        padding: 40px 16px;
-    }
-
-    .truck-company-showcase .section-title h2 {
-        font-size: 28px;
-    }
-
-    .isometric-truck-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .isometric-truck-card img {
-        max-width: 140px;
-        height: 95px;
-    }
-
-    .isometric-truck-card h3 {
-        font-size: 18px;
-    }
-}
-
-
-
+/* -----------------------------
+   CONTACT ACTIONS
+----------------------------- */
 .contact-actions {
     display: flex;
     justify-content: center;
@@ -1113,7 +989,9 @@ output {
     line-height: 1.6;
 }
 
-/* Update Toll Payment Section */
+/* -----------------------------
+   UPDATE TOLL PAYMENT SECTION
+----------------------------- */
 .toll-payment-form {
     background: #ffffff;
     border: 1px solid #dbe7f3;
@@ -1168,17 +1046,14 @@ output {
     margin-top: 10px;
 }
 
-
-/* ========================= */
-/* FINAL FORM UNIFORM STYLE  */
-/* ========================= */
-
+/* -----------------------------
+   FINAL FORM UNIFORM STYLE
+----------------------------- */
 .side-area {
     display: grid;
     gap: 22px;
 }
 
-/* All 3 forms same card style */
 .side-area .panel,
 .side-area .toll-payment-form {
     background: #ffffff;
@@ -1188,7 +1063,6 @@ output {
     box-shadow: 0 10px 24px rgba(15, 58, 104, 0.08);
 }
 
-/* Title */
 .side-area .panel h2,
 .side-area .toll-payment-form h2 {
     font-size: 20px;
@@ -1196,7 +1070,6 @@ output {
     margin-bottom: 16px;
 }
 
-/* Labels */
 .side-area .stacked-form label,
 .side-area .toll-payment-form label {
     font-size: 15px;
@@ -1205,7 +1078,6 @@ output {
     margin-bottom: 8px;
 }
 
-/* Inputs & Select */
 .side-area .stacked-form input,
 .side-area .stacked-form select,
 .side-area .toll-payment-form input,
@@ -1221,7 +1093,6 @@ output {
     outline: none;
 }
 
-/* Focus effect */
 .side-area .stacked-form input:focus,
 .side-area .stacked-form select:focus,
 .side-area .toll-payment-form input:focus,
@@ -1231,7 +1102,6 @@ output {
     box-shadow: 0 0 0 3px rgba(15, 74, 136, 0.08);
 }
 
-/* Button */
 .side-area .stacked-form .btn,
 .side-area .toll-payment-form .btn {
     width: 100%;
@@ -1239,124 +1109,6 @@ output {
     border-radius: 14px;
     font-size: 16px;
     font-weight: 800;
-}
-
-/* Home Booking Form - Compact Size */
-.booking-card {
-    max-width: 480px;   /* size control */
-    margin: 0 auto;     /* center */
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-/* Header reduce */
-.booking-card .form-header {
-    padding: 14px;
-    font-size: 20px;
-}
-
-/* Body spacing reduce */
-.booking-card form {
-    padding: 18px;
-}
-
-/* Input size reduce */
-.booking-card input,
-.booking-card select {
-    height: 44px;
-    font-size: 15px;
-    padding: 10px 12px;
-    border-radius: 12px;
-}
-
-/* Label small */
-.booking-card label {
-    font-size: 14px;
-    margin-bottom: 6px;
-}
-
-/* Button size */
-.booking-card .btn {
-    height: 44px;
-    font-size: 16px;
-    border-radius: 12px;
-}
-
-/* ===== LOGO + TITLE FINAL FIX ===== */
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap');
-
-body {
-    font-family: 'Montserrat', sans-serif !important;
-}
-
-.nav-left {
-    display: flex !important;
-    align-items: center !important;
-    gap: 0px !important; /* logo & text space reduce */
-}
-
-.logo {
-    width: 100px !important;
-    height: 100px !important;
-    object-fit: contain !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.brand-text {
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.brand-text h2 {
-    margin: 0 !important;
-    padding: 0 !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 30px !important;
-    font-weight: 800 !important;
-    line-height: 1.1 !important;
-    letter-spacing: 0px !important;
-    color: #143f72 !important;
-}
-
-.brand-text p {
-    margin: 4px 0 0 0 !important;
-    padding: 0 !important;
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    line-height: 1.2 !important;
-    color: #5f7893 !important;
-}
-
-/* ===== FINAL APP UPGRADE ADDITIONS ===== */
-
-.contact-actions {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-}
-
-.whatsapp-btn {
-    background: #25D366;
-    color: white;
-}
-
-.whatsapp-btn:hover {
-    background: #1faa55;
-}
-
-.contact-note {
-    margin-top: 18px;
-    color: #e7f0fb;
-    font-size: 15px;
-    line-height: 1.6;
 }
 
 .gps-actions {
@@ -1398,613 +1150,9 @@ body {
     margin-top: 18px;
 }
 
-@media (max-width: 992px) {
-    .owner-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .table-wrap {
-        display: none;
-    }
-
-    .mobile-booking-cards {
-        display: block;
-    }
-
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .card-grid.two,
-    .card-grid.three,
-    .card-grid.four {
-        grid-template-columns: 1fr;
-    }
-
-    .hero-content {
-        grid-template-columns: 1fr;
-    }
-
-    .nav-links {
-        display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        padding: 12px 18px;
-    }
-
-    .nav-left {
-        gap: 8px;
-    }
-
-    .logo {
-        width: 70px !important;
-        height: 70px !important;
-    }
-
-    .brand-text h2 {
-        font-size: 24px !important;
-    }
-
-    .brand-text p {
-        font-size: 12px !important;
-    }
-
-    .hero {
-        padding: 26px 18px;
-    }
-
-    .booking-card {
-        max-width: 100%;
-    }
-
-    #bookingForm {
-        padding: 18px;
-    }
-
-    .stats-section {
-        grid-template-columns: 1fr 1fr;
-        padding: 20px 18px;
-    }
-
-    .truck-grid,
-    .why-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .truck-types-section,
-    .why-us-section,
-    .logos-section,
-    .contact-section {
-        padding: 48px 18px;
-    }
-
-    .side-area .panel,
-    .side-area .toll-payment-form {
-        padding: 18px 16px;
-    }
-
-    .side-area .panel h2,
-    .side-area .toll-payment-form h2 {
-        font-size: 20px;
-    }
-
-    .side-area .stacked-form input,
-    .side-area .stacked-form select,
-    .side-area .toll-payment-form input,
-    .side-area .toll-payment-form select {
-        height: 46px;
-        font-size: 15px;
-    }
-
-    .side-area .stacked-form .btn,
-    .side-area .toll-payment-form .btn {
-        height: 46px;
-        font-size: 15px;
-    }
-}
-
-.isometric-truck-card img {
-    display: block !important;
-    margin: 0 auto !important;
-}
-
-.isometric-truck-card h3 {
-    display: block !important;
-    margin: 10px auto 0 !important;
-}
-
-.hero {
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-bg-slider {
-    position: absolute;
-    inset: 0;
-    background-image: url("../images/bg1.jpg");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: background-image 0.8s ease-in-out;
-    z-index: 0;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.65),
-        rgba(255, 255, 255, 0.30)
-    );
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-/* ========================= */
-/* MOBILE VIEW FINAL FIX     */
-/* ========================= */
-
-.menu-toggle {
-    display: none;
-    background: #0f4a88;
-    color: #ffffff;
-    border: none;
-    font-size: 24px;
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
-    cursor: pointer;
-     z-index: 1300;
-}
-
-.hero {
-    min-height: auto;
-}
-
-.hero-bg-slider {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: 0;
-}
-
-.hero-overlay {
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-.booking-card {
-    max-width: 460px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-#bookingForm {
-    padding: 20px;
-}
-
-#bookingForm .form-group {
-    margin-bottom: 12px;
-}
-
-#bookingForm label {
-    font-size: 14px;
-    margin-bottom: 6px;
-}
-
-#bookingForm input,
-#bookingForm select {
-    height: 44px;
-    padding: 10px 12px;
-    font-size: 15px;
-    border-radius: 12px;
-}
-
-.estimate-box {
-    margin: 12px 0;
-    padding: 12px 14px;
-    font-size: 15px;
-}
-
-.hero-buttons {
-    gap: 12px;
-}
-
-.hero-buttons .btn {
-    min-height: 46px;
-    font-size: 15px;
-    border-radius: 12px;
-}
-
-@media (max-width: 992px) {
-    .navbar {
-        padding: 12px 16px;
-        align-items: center;
-    }
-
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 78px;
-        right: 16px;
-        width: 220px;
-        background: #ffffff;
-        border: 1px solid #dbe7f3;
-        border-radius: 16px;
-        box-shadow: 0 14px 30px rgba(15, 58, 104, 0.12);
-        padding: 12px;
-        flex-direction: column;
-        gap: 8px;
-        z-index: 1200;
-    }
-
-    .nav-links.show {
-        display: flex;
-    }
-
-    .nav-links a {
-        display: block;
-        width: 100%;
-        padding: 10px 12px;
-        border-radius: 10px;
-        font-size: 15px;
-    }
-
-    .logo {
-        width: 58px !important;
-        height: 58px !important;
-    }
-
-    .nav-left {
-        gap: 8px !important;
-    }
-
-    .brand-text h2 {
-        font-size: 20px !important;
-        line-height: 1.1 !important;
-    }
-
-    .brand-text p {
-        font-size: 12px !important;
-        margin-top: 2px !important;
-    }
-
-    .hero {
-        padding: 24px 16px 30px;
-    }
-
-    .hero-content {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .hero-left {
-        max-width: 100%;
-    }
-
-    .hero-badge {
-        font-size: 13px;
-        padding: 8px 14px;
-        margin-bottom: 14px;
-    }
-
-    .hero-left h1 {
-        font-size: 32px;
-        line-height: 1.15;
-        margin-bottom: 14px;
-    }
-
-    .hero-left p {
-        font-size: 16px;
-        line-height: 1.6;
-        margin-bottom: 18px;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-    }
-
-    .hero-buttons .btn {
-        width: 100%;
-    }
-
-    .booking-card {
-        max-width: 100%;
-        border-radius: 20px;
-    }
-
-    .booking-top {
-        font-size: 20px;
-        padding: 14px 18px;
-    }
-
-    .stats-section {
-        grid-template-columns: 1fr 1fr;
-        padding: 18px 16px;
-        gap: 12px;
-    }
-
-    .stat-box {
-        padding: 18px 12px;
-    }
-
-    .stat-box h3 {
-        font-size: 24px;
-    }
-
-    .truck-grid,
-    .why-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .truck-types-section,
-    .why-us-section,
-    .logos-section,
-    .contact-section {
-        padding: 40px 16px;
-    }
-}
-
-@media (max-width: 640px) {
-    .navbar {
-        padding: 10px 14px;
-    }
-
-    .brand-text h2 {
-        font-size: 18px !important;
-    }
-
-    .brand-text p {
-        font-size: 11px !important;
-    }
-
-    .hero {
-        padding: 20px 14px 26px;
-    }
-
-    .hero-left h1 {
-        font-size: 26px;
-    }
-
-    .hero-left p {
-        font-size: 15px;
-    }
-
-    .booking-top {
-        font-size: 18px;
-    }
-
-    #bookingForm {
-        padding: 16px;
-    }
-
-    #bookingForm input,
-    #bookingForm select {
-        height: 42px;
-        font-size: 14px;
-    }
-
-    .stats-section {
-        grid-template-columns: 1fr;
-    }
-}
-
-
-/* Mobile menu final fix */
-.menu-toggle {
-    display: none;
-    background: #0f4a88;
-    color: #ffffff;
-    border: none;
-    font-size: 28px;
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-    cursor: pointer;
-    z-index: 1300;
-}
-
-@media (max-width: 992px) {
-    .menu-toggle {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .navbar {
-        position: relative;
-    }
-
-    .nav-links {
-        display: none !important;
-        position: absolute;
-        top: 82px;
-        right: 14px;
-        width: 230px;
-        background: #ffffff;
-        border: 1px solid #dbe7f3;
-        border-radius: 16px;
-        box-shadow: 0 14px 30px rgba(15, 58, 104, 0.18);
-        padding: 12px;
-        flex-direction: column;
-        gap: 8px;
-        z-index: 1300;
-    }
-
-    .nav-links.show {
-        display: flex !important;
-    }
-
-    .nav-links a {
-        display: block;
-        width: 100%;
-        padding: 10px 12px;
-        border-radius: 10px;
-        color: #143f72;
-        font-size: 15px;
-        font-weight: 700;
-        background: #f8fbff;
-    }
-
-    .nav-links a:hover {
-        background: #edf5ff;
-    }
-}
-
-/* ========================= */
-/* BASE HEADER MOBILE FIX    */
-/* ========================= */
-
-.site-header {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(216, 229, 243, 0.7);
-    position: sticky;
-    top: 0;
-    z-index: 1200;
-    box-shadow: 0 8px 24px rgba(16, 48, 89, 0.06);
-}
-
-.nav-wrap {
-    min-height: 78px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    position: relative;
-}
-
-.brand {
-    font-size: 30px;
-    font-weight: 800;
-    color: #133b69;
-    letter-spacing: 0.3px;
-    text-decoration: none;
-}
-
-.brand span {
-    color: #ff8a1d;
-}
-
-.nav {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-}
-
-.nav a {
-    color: #143f72;
-    font-weight: 700;
-    padding: 10px 14px;
-    border-radius: 10px;
-    transition: 0.25s ease;
-    text-decoration: none;
-}
-
-.nav a:hover {
-    background: #eef5ff;
-    color: #ff8a1d;
-}
-
-.menu-toggle {
-    display: none;
-    background: #0f4a88;
-    color: #ffffff;
-    border: none;
-    font-size: 28px;
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-    cursor: pointer;
-    z-index: 1300;
-}
-
-/* Desktop-la menu button hide */
-@media (min-width: 993px) {
-    .menu-toggle {
-        display: none !important;
-    }
-
-    .nav {
-        display: flex !important;
-        position: static !important;
-        width: auto !important;
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        flex-direction: row !important;
-    }
-}
-
-/* Mobile-la nav default hidden */
-@media (max-width: 992px) {
-    .menu-toggle {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .nav {
-        display: none !important;
-        position: absolute;
-        top: 72px;
-        right: 0;
-        width: 220px;
-        background: #ffffff;
-        border: 1px solid #dbe7f3;
-        border-radius: 16px;
-        box-shadow: 0 14px 30px rgba(15, 58, 104, 0.18);
-        padding: 12px;
-        flex-direction: column;
-        gap: 8px;
-        z-index: 1300;
-    }
-
-    .nav.show {
-        display: flex !important;
-    }
-
-    .nav a {
-        display: block;
-        width: 100%;
-        padding: 10px 12px;
-        border-radius: 10px;
-        color: #143f72;
-        font-size: 15px;
-        font-weight: 700;
-        background: #f8fbff;
-    }
-
-    .nav a:hover {
-        background: #edf5ff;
-    }
-}
-
-/* ========================= */
-/* BASE NAVBAR SAME AS HOME  */
-/* ========================= */
-
+/* -----------------------------
+   BASE NAVBAR SAME AS HOME
+----------------------------- */
 .base-navbar {
     width: 100%;
     background: #ffffff;
@@ -2070,13 +1218,14 @@ body {
     color: #ff8a1d;
 }
 
-/* active current page */
 .base-nav-links a.active-link {
     color: #ff8a1d !important;
     background: #fff3e6;
 }
 
-/* mobile menu button */
+/* -----------------------------
+   MOBILE MENU
+----------------------------- */
 .menu-toggle {
     display: none;
     background: #0f4a88;
@@ -2090,11 +1239,290 @@ body {
     z-index: 1300;
 }
 
-/* ========================= */
-/* MOBILE BASE NAVBAR        */
-/* ========================= */
+@media (min-width: 993px) {
+    .menu-toggle {
+        display: none !important;
+    }
+
+    .nav {
+        display: flex !important;
+        position: static !important;
+        width: auto !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        flex-direction: row !important;
+    }
+}
+
+/* -----------------------------
+   RESPONSIVE
+----------------------------- */
+@media (max-width: 1180px) {
+    .owner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .truck-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid.four {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid,
+    .stats-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
 @media (max-width: 992px) {
+    .nav-links {
+        display: none !important;
+        position: absolute;
+        top: 78px;
+        right: 16px;
+        width: 220px;
+        background: #ffffff;
+        border: 1px solid #dbe7f3;
+        border-radius: 16px;
+        box-shadow: 0 14px 30px rgba(15, 58, 104, 0.12);
+        padding: 12px;
+        flex-direction: column;
+        gap: 8px;
+        z-index: 1200;
+    }
+
+    .nav-links.show {
+        display: flex !important;
+    }
+
+    .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 700;
+        background: #f8fbff;
+    }
+
+    .nav-links a:hover {
+        background: #edf5ff;
+    }
+
+    .menu-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar {
+        padding: 12px 16px;
+        align-items: center;
+        position: relative;
+    }
+
+    .logo {
+        width: 58px !important;
+        height: 58px !important;
+    }
+
+    .nav-left {
+        gap: 8px !important;
+    }
+
+    .brand-text h2 {
+        font-size: 20px !important;
+        line-height: 1.1 !important;
+    }
+
+    .brand-text p {
+        font-size: 12px !important;
+        margin-top: 2px !important;
+    }
+
+    .truck-grid,
+    .card-grid.three {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid.two {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 20px 14px 30px;
+        background: none !important;
+    }
+
+    .hero-bg-slider {
+        display: none !important;
+    }
+
+    .hero-overlay {
+        display: none !important;
+    }
+
+    .hero-text-wrap {
+        position: relative;
+        overflow: hidden;
+        border-radius: 24px;
+        padding: 18px 16px 20px;
+        min-height: 380px;
+        display: flex;
+        align-items: flex-start;
+        background-image: linear-gradient(
+                rgba(255, 255, 255, 0.58),
+                rgba(255, 255, 255, 0.38)
+            ),
+            url("../images/bg1.jpg");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        box-shadow: 0 10px 28px rgba(14, 50, 92, 0.12);
+        max-width: 100%;
+    }
+
+    .hero-left {
+        max-width: 100%;
+    }
+
+    .hero-badge {
+        font-size: 13px;
+        padding: 8px 14px;
+        margin-bottom: 14px;
+        background: rgba(255, 255, 255, 0.78);
+        backdrop-filter: blur(6px);
+    }
+
+    .hero-left h1 {
+        font-size: 28px;
+        line-height: 1.15;
+        margin-bottom: 14px;
+        color: #123b6a;
+    }
+
+    .hero-left p {
+        font-size: 15px;
+        line-height: 1.65;
+        color: #4d6782;
+        margin-bottom: 18px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        min-height: 46px;
+        font-size: 15px;
+        border-radius: 12px;
+    }
+
+    .booking-section {
+        margin-top: 0;
+        padding: 18px 14px 24px;
+    }
+
+    .booking-section .booking-card {
+        max-width: 100%;
+        width: 100%;
+        border-radius: 24px;
+        box-shadow: 0 14px 30px rgba(15, 58, 104, 0.12);
+    }
+
+    .booking-top {
+        font-size: 20px;
+        padding: 14px 18px;
+    }
+
+    #bookingForm {
+        padding: 18px;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr 1fr;
+        padding: 18px 16px;
+        gap: 12px;
+    }
+
+    .stat-box {
+        padding: 18px 12px;
+    }
+
+    .stat-box h3 {
+        font-size: 24px;
+    }
+
+    .truck-grid,
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .truck-types-section,
+    .why-us-section,
+    .logos-section,
+    .contact-section {
+        padding: 40px 16px;
+    }
+
+    .side-area .panel,
+    .side-area .toll-payment-form {
+        padding: 18px 16px;
+    }
+
+    .side-area .panel h2,
+    .side-area .toll-payment-form h2 {
+        font-size: 20px;
+    }
+
+    .side-area .stacked-form input,
+    .side-area .stacked-form select,
+    .side-area .toll-payment-form input,
+    .side-area .toll-payment-form select {
+        height: 46px;
+        font-size: 15px;
+    }
+
+    .side-area .stacked-form .btn,
+    .side-area .toll-payment-form .btn {
+        height: 46px;
+        font-size: 15px;
+    }
+
+    .owner-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .table-wrap {
+        display: none;
+    }
+
+    .mobile-booking-cards {
+        display: block;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-grid.two,
+    .card-grid.three,
+    .card-grid.four {
+        grid-template-columns: 1fr;
+    }
+
     .base-navbar {
         padding: 12px 16px;
         position: sticky;
@@ -2111,12 +1539,6 @@ body {
 
     .base-brand-text p {
         font-size: 11px;
-    }
-
-    .menu-toggle {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
     }
 
     .base-nav-links {
@@ -2153,179 +1575,61 @@ body {
         color: #ff8a1d !important;
         background: #fff3e6 !important;
     }
-}
 
-.nav-links a.active-link {
-    color: #ff8a1d !important;
-    background: #fff3e6;
-}
-
-/* ========================= */
-/* MOBILE HERO BACKGROUND FIX */
-/* ========================= */
-
-.hero {
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-bg-slider {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-    z-index: 0;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.65),
-        rgba(255, 255, 255, 0.30)
-    );
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-}
-
-/* Desktop normal */
-.hero-text-wrap {
-    background: transparent;
-    border-radius: 0;
-}
-
-/* ========================= */
-/* MOBILE ONLY HERO SECTION  */
-/* ========================= */
-
-@media (max-width: 992px) {
-    .hero {
-        background: none !important;
-        padding: 20px 14px 30px;
+    .isometric-truck-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .hero-bg-slider {
-        display: none !important;
+    .isometric-truck-card img {
+        max-width: 150px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: min(100% - 24px, 1200px);
     }
 
-    .hero-overlay {
-        display: none !important;
-    }
-
-    .hero-content {
-        display: flex;
-        flex-direction: column;
-        gap: 18px;
-    }
-
-    /* Background only for content area */
-    .hero-text-wrap {
-        position: relative;
-        overflow: hidden;
-        border-radius: 24px;
-        padding: 18px 16px 20px;
-        min-height: 380px;
-        display: flex;
-        align-items: flex-start;
-        background-image: linear-gradient(
-                rgba(255, 255, 255, 0.58),
-                rgba(255, 255, 255, 0.38)
-            ),
-            url("../images/bg1.jpg");
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-        box-shadow: 0 10px 28px rgba(14, 50, 92, 0.12);
-    }
-
-    .hero-left {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .hero-badge {
-        font-size: 13px;
-        padding: 8px 14px;
-        margin-bottom: 14px;
-        background: rgba(255, 255, 255, 0.78);
-        backdrop-filter: blur(6px);
-    }
-
-    .hero-left h1 {
+    .section-head h1,
+    .section-title h2 {
         font-size: 28px;
-        line-height: 1.15;
-        margin-bottom: 14px;
-        color: #123b6a;
     }
 
-    .hero-left p {
-        font-size: 15px;
-        line-height: 1.65;
-        color: #4d6782;
-        margin-bottom: 18px;
+    .contact-box h2 {
+        font-size: 28px;
     }
 
-    .hero-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .hero-buttons .btn {
-        width: 100%;
-    }
-
-    /* Booking card separate white card */
-    .booking-card {
-        width: 100%;
-        max-width: 100%;
-        background: #ffffff;
-        border-radius: 24px;
-        overflow: hidden;
-        box-shadow: 0 14px 30px rgba(15, 58, 104, 0.12);
-        margin-top: 0;
-    }
-
-    .booking-top {
-        font-size: 20px;
-        padding: 14px 18px;
-    }
-
-    #bookingForm {
+    .panel,
+    .driver-summary,
+    .truck-card,
+    .info-card,
+    .why-card {
         padding: 18px;
     }
 
-    #bookingForm .form-group {
-        margin-bottom: 12px;
-    }
-
-    #bookingForm label {
-        font-size: 14px;
-        margin-bottom: 6px;
-    }
-
-    #bookingForm input,
-    #bookingForm select {
-        height: 44px;
-        padding: 10px 12px;
-        font-size: 15px;
-        border-radius: 12px;
-    }
-
-    .estimate-box {
-        margin: 12px 0;
-        padding: 12px 14px;
-        font-size: 15px;
+    .btn {
+        width: 100%;
     }
 }
 
 @media (max-width: 640px) {
+    .navbar {
+        padding: 10px 14px;
+    }
+
+    .brand-text h2 {
+        font-size: 18px !important;
+    }
+
+    .brand-text p {
+        font-size: 11px !important;
+    }
+
+    .hero {
+        padding: 20px 14px 22px;
+    }
+
     .hero-text-wrap {
         min-height: 340px;
         padding: 16px 14px 18px;
@@ -2352,5 +1656,31 @@ body {
     #bookingForm select {
         height: 42px;
         font-size: 14px;
+    }
+
+    .stats-section {
+        grid-template-columns: 1fr;
+    }
+
+    .truck-company-showcase {
+        padding: 40px 16px;
+    }
+
+    .truck-company-showcase .section-title h2 {
+        font-size: 28px;
+    }
+
+    .isometric-truck-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .isometric-truck-card img {
+        max-width: 140px;
+        height: 95px;
+    }
+
+    .isometric-truck-card h3 {
+        font-size: 18px;
     }
 }

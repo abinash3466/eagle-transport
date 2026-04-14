@@ -19,7 +19,7 @@
 
         <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
 
-         <nav class="nav-links" id="mobileNav">
+        <nav class="nav-links" id="mobileNav">
             <a href="/" class="active-link">Home</a>
             <a href="#booking">Book Truck</a>
             <a href="#truck-types">Truck</a>
@@ -40,6 +40,7 @@
         {% endif %}
     {% endwith %}
 
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-bg-slider" id="heroBgSlider"></div>
         <div class="hero-overlay"></div>
@@ -47,82 +48,84 @@
         <div class="hero-text-wrap">
             <div class="hero-left">
                 <span class="hero-badge">Eagle Transport Service</span>
-                    <h1>Eagle Transport Service: Fast & Easy Truck Booking Across India.</h1>
-                    <p>
-                     Simple booking process. Clear truck options. Reliable service for District, State, and National loads.
-                    </p>
+                <h1>Eagle Transport Service: Fast & Easy Truck Booking Across India.</h1>
+                <p>
+                    Simple booking process. Clear truck options. Reliable service for District, State, and National loads.
+                </p>
 
                 <div class="hero-buttons">
-                <a href="#booking" class="btn primary-btn">Book Truck Now</a>
-                <a href="{{ url_for('trucks_page') }}" class="btn secondary-btn">View Truck Types</a>
+                    <a href="#booking" class="btn primary-btn">Book Truck Now</a>
+                    <a href="{{ url_for('trucks_page') }}" class="btn secondary-btn">View Truck Types</a>
                 </div>
             </div>
         </div>
+    </section>
 
-            <div class="booking-card" id="booking">
-                <div class="booking-top">Truck Booking</div>
+    <!-- BOOKING SECTION -->
+    <section class="booking-section" id="booking">
+        <div class="booking-card">
+            <div class="booking-top">Truck Booking</div>
 
-                <form id="bookingForm" method="post" action="{{ url_for('book_truck') }}">
-                    <div class="form-group">
-                        <label>Your Name</label>
-                        <input type="text" name="customer_name" placeholder="Enter your name" required>
-                    </div>
+            <form id="bookingForm" method="post" action="{{ url_for('book_truck') }}">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="customer_name" placeholder="Enter your name" required>
+                </div>
 
-                    <div class="form-group">
-                        <label>Mobile Number</label>
-                        <input type="tel" name="mobile" placeholder="Enter mobile number" required>
-                    </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" name="mobile" placeholder="Enter mobile number" required>
+                </div>
 
-                    <div class="form-group">
-                        <label>Pickup Place</label>
-                        <input type="text" name="pickup_location" placeholder="From where?" required>
-                    </div>
+                <div class="form-group">
+                    <label>Pickup Place</label>
+                    <input type="text" name="pickup_location" placeholder="From where?" required>
+                </div>
 
-                    <div class="form-group">
-                        <label>Drop Place</label>
-                        <input type="text" name="drop_location" placeholder="To where?" required>
-                    </div>
+                <div class="form-group">
+                    <label>Drop Place</label>
+                    <input type="text" name="drop_location" placeholder="To where?" required>
+                </div>
 
-                    <div class="form-group">
-                        <label>Trip Level</label>
-                        <select id="tripLevel" name="trip_level" required>
-                            <option value="">Select Trip Level</option>
-                            {% for level in trip_levels %}
-                            <option value="{{ level }}">{{ level }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label>Trip Level</label>
+                    <select id="tripLevel" name="trip_level" required>
+                        <option value="">Select Trip Level</option>
+                        {% for level in trip_levels %}
+                        <option value="{{ level }}">{{ level }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                    <div class="form-group">
-                        <label>Select Truck</label>
-                        <select id="truckType" name="truck_type" required>
-                            <option value="">Choose Truck</option>
-                            {% for truck in truck_types %}
-                            <option value="{{ truck.name }}">{{ truck.name }} - {{ truck.capacity }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label>Select Truck</label>
+                    <select id="truckType" name="truck_type" required>
+                        <option value="">Choose Truck</option>
+                        {% for truck in truck_types %}
+                        <option value="{{ truck.name }}">{{ truck.name }} - {{ truck.capacity }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-                    <div class="form-group">
-                        <label>Goods Type</label>
-                        <input type="text" name="goods_type" placeholder="Example: Cement / Furniture / Rice Bags" required>
-                    </div>
+                <div class="form-group">
+                    <label>Goods Type</label>
+                    <input type="text" name="goods_type" placeholder="Example: Cement / Furniture / Rice Bags" required>
+                </div>
 
-                    <div class="form-group">
-                        <label>Load Weight (Tons)</label>
-                        <input type="number" id="loadWeight" name="load_weight" step="0.1" min="0.1" placeholder="Example: 2" required>
-                    </div>
+                <div class="form-group">
+                    <label>Load Weight (Tons)</label>
+                    <input type="number" id="loadWeight" name="load_weight" step="0.1" min="0.1" placeholder="Example: 2" required>
+                </div>
 
-                    <div class="estimate-box">
-                        <p><strong>Estimated Price:</strong> <span id="estimateAmount">₹ 0</span></p>
-                    </div>
+                <div class="estimate-box">
+                    <p><strong>Estimated Price:</strong> <span id="estimateAmount">₹ 0</span></p>
+                </div>
 
-                    <div class="hero-buttons" style="margin-top: 10px;">
-                        <button type="button" class="btn booking-btn" onclick="calculateFare()">Check Truck Fare</button>
-                        <button type="submit" class="btn primary-btn">Confirm Booking</button>
-                    </div>
-                </form>
-            </div>
+                <div class="hero-buttons" style="margin-top: 10px;">
+                    <button type="button" class="btn booking-btn" onclick="calculateFare()">Check Truck Fare</button>
+                    <button type="submit" class="btn primary-btn">Confirm Booking</button>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -202,42 +205,42 @@
     </section>
 
     <section class="truck-company-showcase">
-    <div class="section-title">
-        <h2>Our Trusted Partners</h2>
-    </div>
-
-    <div class="isometric-truck-grid">
-        <div class="isometric-truck-card">
-            <img src="{{ url_for('static', filename='images/tata-ace.png') }}" alt="Tata Motors Truck">
-            <h3>Tata Motors</h3>
+        <div class="section-title">
+            <h2>Our Trusted Partners</h2>
         </div>
 
-        <div class="isometric-truck-card">
-            <img src="{{ url_for('static', filename='images/ashok-leyland.png') }}" alt="Ashok Leyland Truck">
-            <h3>Ashok Leyland</h3>
-        </div>
+        <div class="isometric-truck-grid">
+            <div class="isometric-truck-card">
+                <img src="{{ url_for('static', filename='images/tata-ace.png') }}" alt="Tata Motors Truck">
+                <h3>Tata Motors</h3>
+            </div>
 
-        <div class="isometric-truck-card">
-            <img src="{{ url_for('static', filename='images/mahindra-pickup.png') }}" alt="Mahindra Truck">
-            <h3>Mahindra</h3>
-        </div>
+            <div class="isometric-truck-card">
+                <img src="{{ url_for('static', filename='images/ashok-leyland.png') }}" alt="Ashok Leyland Truck">
+                <h3>Ashok Leyland</h3>
+            </div>
 
-        <div class="isometric-truck-card">
-            <img src="{{ url_for('static', filename='images/bharatbenz-tipper.png') }}" alt="BharatBenz Truck">
-            <h3>BharatBenz</h3>
-        </div>
+            <div class="isometric-truck-card">
+                <img src="{{ url_for('static', filename='images/mahindra-pickup.png') }}" alt="Mahindra Truck">
+                <h3>Mahindra</h3>
+            </div>
 
-        <div class="isometric-truck-card">
-            <img src="{{ url_for('static', filename='images/eicher-truck.png') }}" alt="Eicher Truck">
-            <h3>Eicher</h3>
-        </div>
+            <div class="isometric-truck-card">
+                <img src="{{ url_for('static', filename='images/bharatbenz-tipper.png') }}" alt="BharatBenz Truck">
+                <h3>BharatBenz</h3>
+            </div>
 
-        <div class="isometric-truck-card">
-            <img src="{{ url_for('static', filename='images/volvo-truck.png') }}" alt="Volvo Truck">
-            <h3>Volvo</h3>
+            <div class="isometric-truck-card">
+                <img src="{{ url_for('static', filename='images/eicher-truck.png') }}" alt="Eicher Truck">
+                <h3>Eicher</h3>
+            </div>
+
+            <div class="isometric-truck-card">
+                <img src="{{ url_for('static', filename='images/volvo-truck.png') }}" alt="Volvo Truck">
+                <h3>Volvo</h3>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section class="contact-section" id="contact">
         <div class="contact-box">
